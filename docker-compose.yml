@@ -1,0 +1,25 @@
+version: "3.4"
+
+services:
+  assignement:
+    stdin_open: true
+    tty: true
+    image: assignement
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    volumes:
+      - .:/usr/src/app
+  mongodb:
+    depends_on:
+      - assignement
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:
